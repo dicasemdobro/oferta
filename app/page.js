@@ -2,58 +2,54 @@
 import { useEffect, useRef, useState } from 'react'
 
 const APP_URL = 'https://app.dicasemdobro.com.br'
-const PIXEL_ID = 'SEU_PIXEL_ID_AQUI'
 
 function fbq(event, params) {
   if (typeof window !== 'undefined' && window.fbq) window.fbq('track', event, params || {})
 }
 
-/* ── CTA BUTTON ── */
+/* ── BOTÃO VERDE ── */
 function CTAButton({ label, text = 'GARANTIR POR R$89,90 AGORA', sub }) {
   return (
     <a
       href={APP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => {
-        fbq('InitiateCheckout', { content_name: label, value: 89.90, currency: 'BRL' })
-      }}
+      onClick={() => fbq('InitiateCheckout', { content_name: label, value: 89.90, currency: 'BRL' })}
       style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        gap: 3, background: '#E33E33', color: '#fff',
+        gap: 3, background: '#1DB954', color: '#fff',
         fontFamily: "'Bebas Neue', sans-serif",
         fontSize: 'clamp(1.15rem, 5vw, 1.35rem)',
         letterSpacing: '0.04em',
         padding: '17px 24px', borderRadius: 14,
         textDecoration: 'none', width: '100%',
         animation: 'pulse 2.2s ease infinite',
-        boxShadow: '0 4px 24px rgba(227,62,51,0.45)',
+        boxShadow: '0 4px 24px rgba(29,185,84,0.45)',
       }}
     >
       {text}
       {sub && (
-        <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.62rem', fontWeight: 600, opacity: 0.75, letterSpacing: '0.02em', textTransform: 'none' }}>
-          {sub}
-        </span>
+        <span style={{
+          fontFamily: 'Inter, sans-serif', fontSize: '0.62rem',
+          fontWeight: 600, opacity: 0.8, letterSpacing: '0.02em', textTransform: 'none',
+        }}>{sub}</span>
       )}
     </a>
   )
 }
 
-/* ── PRICE URGENCY STRIP ── */
+/* ── PRICE STRIP ── */
 function PriceStrip() {
   return (
-    <div style={{
-      display: 'flex', gap: 10, alignItems: 'stretch',
-    }}>
+    <div style={{ display: 'flex', gap: 10, alignItems: 'stretch' }}>
       <div style={{
         flex: 1, borderRadius: 12, padding: '14px 12px', textAlign: 'center',
-        background: 'linear-gradient(135deg,rgba(227,62,51,0.18),rgba(227,62,51,0.06))',
-        border: '1.5px solid rgba(227,62,51,0.5)', position: 'relative',
+        background: 'linear-gradient(135deg,rgba(29,185,84,0.18),rgba(29,185,84,0.06))',
+        border: '1.5px solid rgba(29,185,84,0.5)', position: 'relative',
       }}>
         <div style={{
           position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)',
-          background: '#E33E33', borderRadius: 100, padding: '2px 10px',
+          background: '#1DB954', borderRadius: 100, padding: '2px 10px',
           fontSize: '0.58rem', fontWeight: 800, color: 'white',
           letterSpacing: '0.08em', textTransform: 'uppercase', whiteSpace: 'nowrap',
         }}>🔥 SÓ HOJE</div>
@@ -78,6 +74,66 @@ function PriceStrip() {
   )
 }
 
+/* ── COUNTDOWN até 03/06 às 10h ── */
+function Countdown() {
+  const target = new Date('2025-06-03T10:00:00-03:00').getTime()
+
+  function calc() {
+    const diff = Math.max(0, target - Date.now())
+    return {
+      h: Math.floor(diff / 3600000),
+      m: Math.floor((diff % 3600000) / 60000),
+      s: Math.floor((diff % 60000) / 1000),
+      done: diff <= 0,
+    }
+  }
+
+  const [t, setT] = useState(calc())
+  useEffect(() => {
+    const id = setInterval(() => setT(calc()), 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  if (t.done) return (
+    <div style={{ textAlign: 'center', padding: '12px 0' }}>
+      <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.4rem,6vw,2rem)', color: '#1DB954', letterSpacing: '0.03em' }}>
+        ⚠️ PREÇO JÁ SUBIU!
+      </p>
+    </div>
+  )
+
+  const blocks = [
+    { v: String(t.h).padStart(2, '0'), l: 'horas' },
+    { v: String(t.m).padStart(2, '0'), l: 'min' },
+    { v: String(t.s).padStart(2, '0'), l: 'seg' },
+  ]
+
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 10 }}>
+        ⏳ preço de R$89,90 acaba em
+      </p>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
+        {blocks.map((b, i) => (
+          <span key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <span style={{
+              background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)',
+              borderRadius: 10, padding: '10px 14px',
+              fontFamily: "'Bebas Neue',sans-serif",
+              fontSize: 'clamp(1.8rem,7vw,2.6rem)',
+              color: '#FFD700', lineHeight: 1, minWidth: 58, textAlign: 'center',
+            }}>{b.v}</span>
+            <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 4 }}>{b.l}</span>
+          </span>
+        ))}
+      </div>
+      <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.62rem', marginTop: 8 }}>
+        Oferta encerra em 03/06 às 10h da manhã
+      </p>
+    </div>
+  )
+}
+
 /* ── ECONOMY BAR ── */
 function EconomyBar({ label, economia, max }) {
   const pct = Math.round((economia / max) * 100)
@@ -97,7 +153,7 @@ function EconomyBar({ label, economia, max }) {
       <div style={{ background: 'rgba(255,255,255,0.07)', borderRadius: 100, height: 8, overflow: 'hidden' }}>
         <div style={{
           height: '100%', borderRadius: 100,
-          background: 'linear-gradient(90deg,#E33E33,#FFD700)',
+          background: 'linear-gradient(90deg,#1DB954,#FFD700)',
           width: visible ? `${pct}%` : '0%',
           transition: 'width 1.2s cubic-bezier(0.4,0,0.2,1)',
         }} />
@@ -110,20 +166,15 @@ function EconomyBar({ label, economia, max }) {
 function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false)
   return (
-    <div
-      style={{
-        borderBottom: '1px solid rgba(255,255,255,0.07)',
-        overflow: 'hidden',
-      }}
-    >
+    <div style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
       <button
         onClick={() => setOpen(!open)}
         style={{
           width: '100%', textAlign: 'left', background: 'none', border: 'none',
-          padding: '16px 0', cursor: 'pointer', display: 'flex', justifyContent: 'space-between',
-          alignItems: 'center', gap: 12,
-          color: 'white', fontFamily: 'Inter,sans-serif', fontWeight: 700, fontSize: '0.88rem',
-          lineHeight: 1.4,
+          padding: '16px 0', cursor: 'pointer', display: 'flex',
+          justifyContent: 'space-between', alignItems: 'center', gap: 12,
+          color: 'white', fontFamily: 'Inter,sans-serif', fontWeight: 700,
+          fontSize: '0.88rem', lineHeight: 1.4,
         }}
       >
         <span>{q}</span>
@@ -137,10 +188,7 @@ function FaqItem({ q, a }) {
         }}>+</span>
       </button>
       {open && (
-        <p style={{
-          color: 'rgba(255,255,255,0.55)', fontSize: '0.82rem', lineHeight: 1.6,
-          paddingBottom: 16,
-        }}>{a}</p>
+        <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.82rem', lineHeight: 1.6, paddingBottom: 16 }}>{a}</p>
       )}
     </div>
   )
@@ -170,13 +218,13 @@ const PARTNERS = [
 ]
 
 const FAQS = [
-  { q: 'Posso usar o mesmo restaurante várias vezes?', a: 'Não. Cada voucher pode ser utilizado apenas uma vez por estabelecimento. A proposta é você conhecer diversos restaurantes ao longo do tour gastronômico. Mas atenção: alguns parceiros disponibilizaram mais de uma oferta no app!' },
-  { q: 'Vale para delivery?', a: 'Neste momento, não. Os benefícios são válidos apenas presencialmente. Alguns parceiros oferecem a opção de retirada no local — nesses casos, você faz o pedido pelo WhatsApp e vai buscar. O botão aparece dentro do app.' },
-  { q: 'Como faço o resgate do voucher?', a: 'Simples: escolha o restaurante no app, vá até o local respeitando os dias e horários disponíveis, avise o atendente que veio pelo Dicas em Dobro, e clique em "Resgatar Voucher" na presença dele. Só resgate dentro do estabelecimento.' },
-  { q: 'Funciona todos os dias?', a: 'Cada restaurante define seus próprios dias e horários de participação. Alguns funcionam durante a semana, outros também nos finais de semana. Todas as informações ficam visíveis dentro do aplicativo antes de você ir.' },
-  { q: 'Até quando posso usar?', a: 'Seu acesso é válido até 10 de abril de 2027. Tempo de sobra para aproveitar dezenas de experiências gastronômicas em Rio Preto.' },
-  { q: 'Por que comprar pelo site e não pelo app?', a: 'Comprando pelo site, o pagamento cai direto para nós — sem a taxa da Apple ou Google. Isso permite manter o preço mais baixo para você. Após a compra, é só baixar o app e fazer login com o mesmo e-mail. Funciona igual.' },
-  { q: 'Onde vejo todos os restaurantes participantes?', a: 'Dentro do aplicativo! Novos parceiros são anunciados diariamente no nosso Instagram @dicasemdobro.rp. São mais de 60 estabelecimentos confirmados, com detalhes de cada oferta no app.' },
+  { q: 'Posso usar o mesmo restaurante várias vezes?', a: 'Não. Cada voucher pode ser utilizado apenas uma vez por estabelecimento. Mas atenção: alguns parceiros disponibilizaram mais de uma oferta no app!' },
+  { q: 'Vale para delivery?', a: 'Neste momento, não. Os benefícios são válidos apenas presencialmente. Alguns parceiros oferecem retirada no local via WhatsApp — o botão aparece dentro do app.' },
+  { q: 'Como faço o resgate do voucher?', a: 'Escolha o restaurante no app, vá até o local respeitando os horários, avise o atendente que veio pelo Dicas em Dobro, e clique em "Resgatar Voucher" na presença dele.' },
+  { q: 'Funciona todos os dias?', a: 'Cada restaurante define seus próprios dias e horários. Tudo visível dentro do aplicativo antes de você ir.' },
+  { q: 'Até quando posso usar?', a: 'Seu acesso é válido até 10 de abril de 2027. Tempo de sobra para aproveitar dezenas de experiências em Rio Preto.' },
+  { q: 'Por que comprar pelo site e não pelo app?', a: 'Pelo site você paga R$89,90. Pelo app pagaria R$129,90 — a Apple e o Google ficam com a diferença. Após a compra, é só baixar o app e fazer login com o mesmo e-mail.' },
+  { q: 'Onde vejo todos os restaurantes participantes?', a: 'Dentro do aplicativo! Novos parceiros são anunciados diariamente no nosso Instagram @dicasemdobro.rp. São mais de 60 estabelecimentos confirmados.' },
 ]
 
 const ECONOMY = [
@@ -199,16 +247,16 @@ export default function Home() {
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           LÂMINA 1 — HERO
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section style={{ padding: '32px 20px 28px', background: '#07182a' }}>
+      <section style={{ padding: '28px 20px 28px', background: '#07182a' }}>
 
         {/* Logo + nome */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 22 }}>
-          <img src="/images/logo.webp" alt="Dicas em Dobro" style={{ width: 34, height: 34, borderRadius: '50%', background: 'white', padding: 2 }} />
-          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.04em' }}>DICAS EM DOBRO · RIO PRETO</span>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 18 }}>
+          <img src="/images/logo.webp" alt="Dicas em Dobro" style={{ width: 32, height: 32, borderRadius: '50%', background: 'white', padding: 2 }} />
+          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.04em' }}>DICAS EM DOBRO · RIO PRETO</span>
         </div>
 
         {/* Badge urgência */}
-        <div style={{ textAlign: 'center', marginBottom: 18 }}>
+        <div style={{ textAlign: 'center', marginBottom: 16 }}>
           <span style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             background: 'rgba(227,62,51,0.15)', border: '1px solid rgba(227,62,51,0.45)',
@@ -221,28 +269,33 @@ export default function Home() {
           </span>
         </div>
 
-        {/* Headline */}
+        {/* Headline — menor para não dominar o primeiro scroll */}
         <h1 style={{
           fontFamily: "'Bebas Neue',sans-serif",
-          fontSize: 'clamp(3rem,13vw,5rem)',
-          lineHeight: 0.92, letterSpacing: '0.01em',
-          color: 'white', textAlign: 'center', marginBottom: 14,
+          fontSize: 'clamp(2.4rem,10vw,3.8rem)',
+          lineHeight: 0.95, letterSpacing: '0.01em',
+          color: 'white', textAlign: 'center', marginBottom: 6,
         }}>
           COMPRE 1<br />
           <span style={{ color: '#FFD700' }}>GANHE OUTRO</span><br />
           DE GRAÇA
         </h1>
 
-        <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.45)', fontSize: '0.9rem', marginBottom: 22, lineHeight: 1.55 }}>
-          +60 restaurantes em Rio Preto · +R$3.000 em benefícios<br />
-          Válido até <strong style={{ color: 'rgba(255,255,255,0.7)' }}>10/04/2027</strong>
-        </p>
+        {/* Banner hero-banner abaixo do headline */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 16, boxShadow: '0 6px 24px rgba(0,0,0,0.4)' }}>
+          <img
+            src="/images/hero-banner.webp"
+            alt="+60 restaurantes · +R$3.000 em benefícios · Sorteio iPhone 17e"
+            style={{ width: '100%', display: 'block', objectFit: 'cover' }}
+            loading="eager"
+          />
+        </div>
 
         {/* Price strip */}
         <PriceStrip />
 
         {/* CTA */}
-        <div style={{ marginTop: 16 }}>
+        <div style={{ marginTop: 14 }}>
           <CTAButton
             label="hero"
             text="GARANTIR POR R$89,90 AGORA"
@@ -250,12 +303,12 @@ export default function Home() {
           />
         </div>
 
-        {/* Hero image com badge iPhone */}
-        <div style={{ marginTop: 20, borderRadius: 16, overflow: 'hidden', position: 'relative', boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}>
+        {/* Hero food image com badge iPhone */}
+        <div style={{ marginTop: 16, borderRadius: 16, overflow: 'hidden', position: 'relative', boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}>
           <img
             src="/images/hero.webp"
             alt="Experiências gastronômicas em Rio Preto"
-            style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 340 }}
+            style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 300 }}
           />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,24,42,0.7) 0%, transparent 45%)' }} />
           <div style={{
@@ -277,7 +330,7 @@ export default function Home() {
 
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          LÂMINA 2 — COMO COMPRAR PELO SITE
+          LÂMINA 2 — COMO COMPRAR + COUNTDOWN
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section style={{ padding: '40px 20px', background: '#0a1f35', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
 
@@ -290,6 +343,11 @@ export default function Home() {
             Pelo site você paga <strong style={{ color: 'white' }}>R$89,90</strong>. Pelo app você pagaria R$129,90.<br />
             Sua namorada explica como fazer:
           </p>
+        </div>
+
+        {/* Countdown */}
+        <div style={{ marginBottom: 28 }}>
+          <Countdown />
         </div>
 
         {/* Vimeo video */}
@@ -305,32 +363,46 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Steps */}
+        {/* Steps — passo 1 clicável */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
           {[
-            { n: '1', t: 'Acesse o site', d: 'Clique no botão abaixo — vai abrir o site do app.' },
-            { n: '2', t: 'Crie sua conta', d: 'Cadastre seu e-mail e senha. Rápido, leva 1 minuto.' },
-            { n: '3', t: 'Escolha o plano', d: 'Selecione o Passe Anual por R$89,90.' },
-            { n: '4', t: 'Finalize o pagamento', d: 'Cartão ou Pix. Acesso liberado na hora.' },
-            { n: '5', t: 'Baixe o app e use', d: 'Entre com o mesmo e-mail. Todos os benefícios liberados.' },
-          ].map((s, i) => (
-            <div key={i} style={{
-              display: 'flex', gap: 14, alignItems: 'flex-start',
-              background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
-              borderRadius: 12, padding: '13px 14px',
-            }}>
-              <span style={{
-                flexShrink: 0, width: 28, height: 28, borderRadius: '50%',
-                background: '#E33E33', color: 'white',
-                fontFamily: "'Bebas Neue',sans-serif", fontSize: '1rem', letterSpacing: '0.02em',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>{s.n}</span>
-              <div>
-                <p style={{ fontWeight: 700, fontSize: '0.88rem', color: 'white', marginBottom: 3 }}>{s.t}</p>
-                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.76rem', lineHeight: 1.45 }}>{s.d}</p>
+            { n: '1', t: 'Acesse o site', d: 'Clique aqui para abrir o site do app.', link: true },
+            { n: '2', t: 'Crie sua conta', d: 'Cadastre seu e-mail e senha. Rápido, leva 1 minuto.', link: false },
+            { n: '3', t: 'Escolha o plano', d: 'Selecione o Passe Anual por R$89,90.', link: false },
+            { n: '4', t: 'Finalize o pagamento', d: 'Cartão ou Pix. Acesso liberado na hora.', link: false },
+            { n: '5', t: 'Baixe o app e use', d: 'Entre com o mesmo e-mail. Todos os benefícios liberados.', link: false },
+          ].map((s, i) => {
+            const inner = (
+              <div style={{
+                display: 'flex', gap: 14, alignItems: 'flex-start',
+                background: s.link ? 'rgba(29,185,84,0.08)' : 'rgba(255,255,255,0.03)',
+                border: `1px solid ${s.link ? 'rgba(29,185,84,0.3)' : 'rgba(255,255,255,0.07)'}`,
+                borderRadius: 12, padding: '13px 14px',
+                cursor: s.link ? 'pointer' : 'default',
+                textDecoration: 'none',
+              }}>
+                <span style={{
+                  flexShrink: 0, width: 28, height: 28, borderRadius: '50%',
+                  background: s.link ? '#1DB954' : '#1a3a5c', color: 'white',
+                  fontFamily: "'Bebas Neue',sans-serif", fontSize: '1rem',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>{s.n}</span>
+                <div>
+                  <p style={{ fontWeight: 700, fontSize: '0.88rem', color: s.link ? '#1DB954' : 'white', marginBottom: 3 }}>{s.t} {s.link ? '→' : ''}</p>
+                  <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.76rem', lineHeight: 1.45 }}>{s.d}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+            return s.link ? (
+              <a key={i} href={APP_URL} target="_blank" rel="noopener noreferrer"
+                onClick={() => fbq('InitiateCheckout', { content_name: 'step1', value: 89.90, currency: 'BRL' })}
+                style={{ textDecoration: 'none' }}>
+                {inner}
+              </a>
+            ) : (
+              <div key={i}>{inner}</div>
+            )
+          })}
         </div>
 
         <CTAButton label="como-comprar" text="QUERO COMPRAR POR R$89,90" sub="Abre o site do app · Só hoje nesse preço" />
@@ -388,7 +460,6 @@ export default function Home() {
           </h2>
         </div>
 
-        {/* Horizontal scroll cards */}
         <div style={{
           display: 'flex', overflowX: 'auto', gap: 10,
           paddingLeft: 20, paddingRight: 20,
@@ -410,7 +481,7 @@ export default function Home() {
                 </div>
                 <div style={{
                   position: 'absolute', top: 10, right: 10,
-                  background: 'rgba(227,62,51,0.85)', borderRadius: 100,
+                  background: 'rgba(29,185,84,0.85)', borderRadius: 100,
                   padding: '2px 8px', fontSize: '0.56rem', fontWeight: 800, color: 'white',
                 }}>PARCEIRO</div>
               </div>
@@ -430,17 +501,14 @@ export default function Home() {
         <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.15)', fontSize: '0.62rem', marginTop: 8, marginBottom: 20 }}>← arraste para ver mais →</p>
 
         <div style={{ padding: '0 20px' }}>
-          {/* Grid dos nomes */}
-          <div style={{
-            display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20,
-          }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
             {['Outback', 'Coco Bambu', 'Bonsai', 'Fifty2', 'El Santo', 'Raizal', 'Brasaria', 'Yakiniku', 'Belzebeer', 'Tom Nosso', 'Prozaria', 'Lugano', 'Universo Ozzy', 'Makisu Prime', 'Jazz', 'Harushi', '+ outros'].map((n, i) => (
               <span key={i} style={{
-                background: i === 16 ? 'rgba(227,62,51,0.15)' : 'rgba(255,255,255,0.05)',
-                border: `1px solid ${i === 16 ? 'rgba(227,62,51,0.3)' : 'rgba(255,255,255,0.08)'}`,
+                background: i === 16 ? 'rgba(29,185,84,0.12)' : 'rgba(255,255,255,0.05)',
+                border: `1px solid ${i === 16 ? 'rgba(29,185,84,0.3)' : 'rgba(255,255,255,0.08)'}`,
                 borderRadius: 100, padding: '4px 10px',
                 fontSize: '0.72rem', fontWeight: 600,
-                color: i === 16 ? '#ff7a72' : 'rgba(255,255,255,0.55)',
+                color: i === 16 ? '#1DB954' : 'rgba(255,255,255,0.55)',
               }}>{n}</span>
             ))}
           </div>
@@ -473,18 +541,12 @@ export default function Home() {
           </p>
         </div>
 
-        <div style={{ maxWidth: 340, margin: '0 auto 24px', position: 'relative' }}>
-          <div style={{
-            position: 'absolute', top: '50%', left: '50%',
-            transform: 'translate(-50%,-50%)',
-            width: '80%', height: '50%',
-            background: 'radial-gradient(ellipse,rgba(255,215,0,0.18) 0%,transparent 70%)',
-            borderRadius: '50%',
-          }} />
+        {/* Nova imagem do sorteio */}
+        <div style={{ maxWidth: 400, margin: '0 auto 24px', borderRadius: 16, overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.6)' }}>
           <img
             src="/images/sorteio-iphone.webp"
             alt="Sorteio iPhone 17e Dicas em Dobro"
-            style={{ width: '100%', borderRadius: 14, position: 'relative', zIndex: 1, filter: 'drop-shadow(0 12px 36px rgba(0,0,0,0.6))' }}
+            style={{ width: '100%', display: 'block' }}
             loading="lazy"
           />
         </div>
@@ -551,16 +613,19 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Final price box */}
+        {/* Countdown final */}
+        <div style={{ marginBottom: 24 }}>
+          <Countdown />
+        </div>
+
         <div style={{
           borderRadius: 16, padding: '22px 18px', marginBottom: 20,
-          background: 'linear-gradient(135deg,rgba(227,62,51,0.14),rgba(227,62,51,0.05))',
-          border: '1.5px solid rgba(227,62,51,0.35)', textAlign: 'center',
+          background: 'linear-gradient(135deg,rgba(29,185,84,0.12),rgba(29,185,84,0.04))',
+          border: '1.5px solid rgba(29,185,84,0.3)', textAlign: 'center',
         }}>
           <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.72rem', marginBottom: 6 }}>Preço de hoje — compre pelo site</p>
           <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(3rem,12vw,4rem)', color: 'white', lineHeight: 1, letterSpacing: '0.02em' }}>R$89,90</p>
           <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.7rem', marginTop: 6 }}>Pagamento único · Sem mensalidade · Válido até 10/04/2027</p>
-
           <div style={{ margin: '14px 0', display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
             {['✅ +60 restaurantes', '✅ +R$3.000 em benefícios', '✅ Concorre ao iPhone 17e'].map((b, i) => (
               <span key={i} style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.73rem' }}>{b}</span>
