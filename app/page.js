@@ -7,7 +7,7 @@ function fbq(event, params) {
   if (typeof window !== 'undefined' && window.fbq) window.fbq('track', event, params || {})
 }
 
-/* ── BOTÃO VERDE ── */
+/* ── BOTÃO VERDE (sem glow excessivo) ── */
 function CTAButton({ label, text = 'GARANTIR POR R$89,90 AGORA', sub }) {
   return (
     <a
@@ -23,8 +23,8 @@ function CTAButton({ label, text = 'GARANTIR POR R$89,90 AGORA', sub }) {
         letterSpacing: '0.04em',
         padding: '17px 24px', borderRadius: 14,
         textDecoration: 'none', width: '100%',
-        animation: 'pulse 2.2s ease infinite',
-        boxShadow: '0 4px 24px rgba(29,185,84,0.45)',
+        boxShadow: '0 3px 14px rgba(29,185,84,0.3)',
+        transition: 'opacity 0.2s',
       }}
     >
       {text}
@@ -45,7 +45,7 @@ function PriceStrip() {
       <div style={{
         flex: 1, borderRadius: 12, padding: '14px 12px', textAlign: 'center',
         background: 'linear-gradient(135deg,rgba(29,185,84,0.18),rgba(29,185,84,0.06))',
-        border: '1.5px solid rgba(29,185,84,0.5)', position: 'relative',
+        border: '1.5px solid rgba(29,185,84,0.45)', position: 'relative',
       }}>
         <div style={{
           position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)',
@@ -61,7 +61,7 @@ function PriceStrip() {
         flex: 1, borderRadius: 12, padding: '14px 12px', textAlign: 'center',
         background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)',
       }}>
-        <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.65rem', marginBottom: 4 }}>amanhã sobe para</p>
+        <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.65rem', marginBottom: 4 }}>depois sobe para</p>
         <p style={{
           fontFamily: "'Bebas Neue',sans-serif",
           fontSize: 'clamp(1.9rem,8vw,2.6rem)',
@@ -81,7 +81,8 @@ function Countdown() {
   function calc() {
     const diff = Math.max(0, target - Date.now())
     return {
-      h: Math.floor(diff / 3600000),
+      d: Math.floor(diff / 86400000),
+      h: Math.floor((diff % 86400000) / 3600000),
       m: Math.floor((diff % 3600000) / 60000),
       s: Math.floor((diff % 60000) / 1000),
       done: diff <= 0,
@@ -94,15 +95,8 @@ function Countdown() {
     return () => clearInterval(id)
   }, [])
 
-  if (t.done) return (
-    <div style={{ textAlign: 'center', padding: '12px 0' }}>
-      <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.4rem,6vw,2rem)', color: '#1DB954', letterSpacing: '0.03em' }}>
-        ⚠️ PREÇO JÁ SUBIU!
-      </p>
-    </div>
-  )
-
   const blocks = [
+    { v: String(t.d).padStart(2, '0'), l: 'dias' },
     { v: String(t.h).padStart(2, '0'), l: 'horas' },
     { v: String(t.m).padStart(2, '0'), l: 'min' },
     { v: String(t.s).padStart(2, '0'), l: 'seg' },
@@ -111,7 +105,7 @@ function Countdown() {
   return (
     <div style={{ textAlign: 'center' }}>
       <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 10 }}>
-        ⏳ preço de R$89,90 acaba em
+        ⏳ preço de R$89,90 encerra em
       </p>
       <div style={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
         {blocks.map((b, i) => (
@@ -121,13 +115,13 @@ function Countdown() {
               borderRadius: 10, padding: '10px 14px',
               fontFamily: "'Bebas Neue',sans-serif",
               fontSize: 'clamp(1.8rem,7vw,2.6rem)',
-              color: '#FFD700', lineHeight: 1, minWidth: 58, textAlign: 'center',
+              color: '#FFD700', lineHeight: 1, minWidth: 54, textAlign: 'center',
             }}>{b.v}</span>
             <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 4 }}>{b.l}</span>
           </span>
         ))}
       </div>
-      <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.62rem', marginTop: 8 }}>
+      <p style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.6rem', marginTop: 8 }}>
         Oferta encerra em 03/06 às 10h da manhã
       </p>
     </div>
@@ -210,11 +204,11 @@ function useScrollTracking() {
 }
 
 const PARTNERS = [
-  { img: '/images/rest-cocobambu.webp', name: 'Coco Bambu', cat: 'Frutos do mar', benefit: 'Isca de peixe ou camarão: compre 1, ganhe outro' },
-  { img: '/images/rest-nugrill.webp', name: 'Nugrill Burger', cat: 'Hambúrguer artesanal', benefit: 'Na compra de um Nuhavaí, ganhe outro igual ou menor' },
-  { img: '/images/rest-harushi.webp', name: 'Harushi Oriental', cat: 'Japonesa premium', benefit: 'Combo 15 peças: compre 1, ganhe outro igual ou menor' },
-  { img: '/images/rest-jazz.webp', name: 'Jazz Cozinha', cat: 'Contemporânea', benefit: 'Benefícios exclusivos para membros' },
-  { img: '/images/rest-borelli.webp', name: 'Gelato Borelli', cat: 'Gelato & Sobremesas', benefit: 'Milkshake G: compre 1, ganhe outro igual ou menor' },
+  { img: '/images/rest-cocobambu.webp', name: 'Coco Bambu', cat: 'Frutos do mar', benefit: 'Na compra de uma isca de peixe ou camarão à milanesa, ganhe outra de menor ou igual valor.' },
+  { img: '/images/rest-nugrill.webp', name: 'Nugrill Burger', cat: 'Hambúrguer artesanal', benefit: 'Na compra de um Nuhavaí, ganhe outro de igual ou menor valor.' },
+  { img: '/images/rest-harushi.webp', name: 'Harushi Oriental', cat: 'Japonesa premium', benefit: 'Na compra de um combo (15 peças), ganhe outro de igual ou menor valor.' },
+  { img: '/images/rest-jazz.webp', name: 'Jazz Cozinha', cat: 'Contemporânea', benefit: 'Compre um prato principal e ganhe outro de igual ou menor valor.' },
+  { img: '/images/rest-borelli.webp', name: 'Gelato Borelli', cat: 'Gelato & Sobremesas', benefit: 'Na compra de um Milkshake G, ganhe outro de igual ou menor valor.' },
 ]
 
 const FAQS = [
@@ -247,16 +241,10 @@ export default function Home() {
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           LÂMINA 1 — HERO
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <section style={{ padding: '28px 20px 28px', background: '#07182a' }}>
+      <section style={{ padding: '24px 20px 28px', background: '#07182a' }}>
 
-        {/* Logo + nome */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 18 }}>
-          <img src="/images/logo.webp" alt="Dicas em Dobro" style={{ width: 32, height: 32, borderRadius: '50%', background: 'white', padding: 2 }} />
-          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.04em' }}>DICAS EM DOBRO · RIO PRETO</span>
-        </div>
-
-        {/* Badge urgência */}
-        <div style={{ textAlign: 'center', marginBottom: 16 }}>
+        {/* Badge urgência — sem logo no topo, economiza espaço */}
+        <div style={{ textAlign: 'center', marginBottom: 14 }}>
           <span style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             background: 'rgba(227,62,51,0.15)', border: '1px solid rgba(227,62,51,0.45)',
@@ -269,24 +257,24 @@ export default function Home() {
           </span>
         </div>
 
-        {/* Headline — menor para não dominar o primeiro scroll */}
+        {/* Headline */}
         <h1 style={{
           fontFamily: "'Bebas Neue',sans-serif",
           fontSize: 'clamp(2.4rem,10vw,3.8rem)',
           lineHeight: 0.95, letterSpacing: '0.01em',
-          color: 'white', textAlign: 'center', marginBottom: 6,
+          color: 'white', textAlign: 'center', marginBottom: 14,
         }}>
           COMPRE 1<br />
           <span style={{ color: '#FFD700' }}>GANHE OUTRO</span><br />
           DE GRAÇA
         </h1>
 
-        {/* Banner hero-banner abaixo do headline */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 16, boxShadow: '0 6px 24px rgba(0,0,0,0.4)' }}>
+        {/* Banner informativo */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
           <img
             src="/images/hero-banner.webp"
             alt="+60 restaurantes · +R$3.000 em benefícios · Sorteio iPhone 17e"
-            style={{ width: '100%', display: 'block', objectFit: 'cover' }}
+            style={{ width: '100%', display: 'block' }}
             loading="eager"
           />
         </div>
@@ -303,14 +291,28 @@ export default function Home() {
           />
         </div>
 
-        {/* Hero food image com badge iPhone */}
+        {/* Hero image com logo overlay no topo esquerdo + badge iPhone */}
         <div style={{ marginTop: 16, borderRadius: 16, overflow: 'hidden', position: 'relative', boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}>
           <img
             src="/images/hero.webp"
             alt="Experiências gastronômicas em Rio Preto"
             style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 300 }}
           />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,24,42,0.7) 0%, transparent 45%)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,24,42,0.75) 0%, rgba(7,24,42,0.2) 60%, transparent 100%)' }} />
+
+          {/* Logo no topo esquerdo da foto */}
+          <div style={{
+            position: 'absolute', top: 10, left: 12,
+            display: 'flex', alignItems: 'center', gap: 6,
+            background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)',
+            borderRadius: 100, padding: '5px 10px 5px 5px',
+            border: '1px solid rgba(255,255,255,0.1)',
+          }}>
+            <img src="/images/logo.webp" alt="Dicas em Dobro" style={{ width: 24, height: 24, borderRadius: '50%', background: 'white', padding: 2 }} />
+            <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.06em' }}>DICAS EM DOBRO · RIO PRETO</span>
+          </div>
+
+          {/* Badge iPhone na parte de baixo */}
           <div style={{
             position: 'absolute', bottom: 12, left: 12, right: 12,
             display: 'flex', alignItems: 'center', gap: 10,
@@ -341,7 +343,7 @@ export default function Home() {
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.82rem', lineHeight: 1.55 }}>
             Pelo site você paga <strong style={{ color: 'white' }}>R$89,90</strong>. Pelo app você pagaria R$129,90.<br />
-            Sua namorada explica como fazer:
+            Assista o vídeo e veja como é simples:
           </p>
         </div>
 
@@ -366,7 +368,7 @@ export default function Home() {
         {/* Steps — passo 1 clicável */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
           {[
-            { n: '1', t: 'Acesse o site', d: 'Clique aqui para abrir o site do app.', link: true },
+            { n: '1', t: 'Acesse o site', d: 'Toque aqui para abrir o site do app.', link: true },
             { n: '2', t: 'Crie sua conta', d: 'Cadastre seu e-mail e senha. Rápido, leva 1 minuto.', link: false },
             { n: '3', t: 'Escolha o plano', d: 'Selecione o Passe Anual por R$89,90.', link: false },
             { n: '4', t: 'Finalize o pagamento', d: 'Cartão ou Pix. Acesso liberado na hora.', link: false },
@@ -378,8 +380,6 @@ export default function Home() {
                 background: s.link ? 'rgba(29,185,84,0.08)' : 'rgba(255,255,255,0.03)',
                 border: `1px solid ${s.link ? 'rgba(29,185,84,0.3)' : 'rgba(255,255,255,0.07)'}`,
                 borderRadius: 12, padding: '13px 14px',
-                cursor: s.link ? 'pointer' : 'default',
-                textDecoration: 'none',
               }}>
                 <span style={{
                   flexShrink: 0, width: 28, height: 28, borderRadius: '50%',
@@ -388,7 +388,9 @@ export default function Home() {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>{s.n}</span>
                 <div>
-                  <p style={{ fontWeight: 700, fontSize: '0.88rem', color: s.link ? '#1DB954' : 'white', marginBottom: 3 }}>{s.t} {s.link ? '→' : ''}</p>
+                  <p style={{ fontWeight: 700, fontSize: '0.88rem', color: s.link ? '#1DB954' : 'white', marginBottom: 3 }}>
+                    {s.t} {s.link ? '→' : ''}
+                  </p>
                   <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.76rem', lineHeight: 1.45 }}>{s.d}</p>
                 </div>
               </div>
@@ -460,6 +462,7 @@ export default function Home() {
           </h2>
         </div>
 
+        {/* Horizontal scroll cards com benefit em caixinha */}
         <div style={{
           display: 'flex', overflowX: 'auto', gap: 10,
           paddingLeft: 20, paddingRight: 20,
@@ -471,30 +474,45 @@ export default function Home() {
               borderRadius: 14, overflow: 'hidden', position: 'relative',
               boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
             }}>
-              <div style={{ paddingBottom: '72%', position: 'relative' }}>
+              <div style={{ paddingBottom: '90%', position: 'relative' }}>
                 <img src={r.img} alt={r.name} loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 55%)' }} />
-                <div style={{ position: 'absolute', bottom: 10, left: 12, right: 12 }}>
-                  <p style={{ fontWeight: 800, fontSize: '0.9rem', color: 'white', lineHeight: 1.2, marginBottom: 3 }}>{r.name}</p>
-                  <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>{r.cat}</p>
-                  <p style={{ fontSize: '0.68rem', color: '#FFD700', lineHeight: 1.35 }}>{r.benefit}</p>
-                </div>
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.3) 50%,transparent 75%)' }} />
+
+                {/* Badge parceiro */}
                 <div style={{
                   position: 'absolute', top: 10, right: 10,
                   background: 'rgba(29,185,84,0.85)', borderRadius: 100,
                   padding: '2px 8px', fontSize: '0.56rem', fontWeight: 800, color: 'white',
                 }}>PARCEIRO</div>
+
+                {/* Info na parte de baixo */}
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px' }}>
+                  <p style={{ fontWeight: 800, fontSize: '0.92rem', color: 'white', lineHeight: 1.2, marginBottom: 2 }}>{r.name}</p>
+                  <p style={{ fontSize: '0.63rem', color: 'rgba(255,255,255,0.45)', marginBottom: 8 }}>{r.cat}</p>
+
+                  {/* Caixinha do benefício */}
+                  <div style={{
+                    background: 'rgba(255,215,0,0.12)',
+                    border: '1px solid rgba(255,215,0,0.35)',
+                    borderRadius: 8, padding: '7px 9px',
+                    backdropFilter: 'blur(6px)',
+                  }}>
+                    <p style={{ fontSize: '0.66rem', color: '#FFD700', lineHeight: 1.45, fontWeight: 600 }}>🎁 {r.benefit}</p>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
+
+          {/* Card +55 outros */}
           <div style={{
             flex: '0 0 52vw', maxWidth: 200, scrollSnapAlign: 'start', borderRadius: 14,
             background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)',
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            padding: 20, textAlign: 'center', minHeight: 180,
+            padding: 20, textAlign: 'center', minHeight: 200,
           }}>
             <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '1.6rem', color: '#FFD700', lineHeight: 1.1, marginBottom: 8 }}>+55<br />outros</p>
-            <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.68rem', lineHeight: 1.4 }}>Coco Bambu, Outback, Raizal, El Santo e muito mais</p>
+            <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.68rem', lineHeight: 1.4 }}>Outback, Raizal, El Santo e muito mais</p>
           </div>
         </div>
 
@@ -529,7 +547,6 @@ export default function Home() {
             border: '1px solid rgba(255,215,0,0.3)', borderRadius: 100,
             padding: '4px 14px', fontSize: '0.66rem', fontWeight: 700,
             color: '#FFD700', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 14,
-            animation: 'pulsegold 2.5s ease infinite',
           }}>
             🏆 BÔNUS EXCLUSIVO DO LANÇAMENTO
           </span>
@@ -541,7 +558,6 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Nova imagem do sorteio */}
         <div style={{ maxWidth: 400, margin: '0 auto 24px', borderRadius: 16, overflow: 'hidden', boxShadow: '0 12px 40px rgba(0,0,0,0.6)' }}>
           <img
             src="/images/sorteio-iphone.webp"
@@ -593,7 +609,7 @@ export default function Home() {
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section style={{ padding: '40px 20px 52px', background: '#07182a', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
 
-        <div style={{ textAlign: 'center', marginBottom: 24 }}>
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
           <span style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             background: 'rgba(227,62,51,0.15)', border: '1px solid rgba(227,62,51,0.4)',
@@ -608,7 +624,7 @@ export default function Home() {
             AMANHÃ<br />O PREÇO <span style={{ color: '#E33E33' }}>SOBE.</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', lineHeight: 1.6, marginBottom: 24 }}>
-            Hoje é R$89,90. Amanhã já sobe. O valor oficial é R$129,90.<br />
+            Hoje é R$89,90. Depois do dia 03/06 às 10h o valor sobe.<br />
             Quem entrou primeiro, pagou menos.
           </p>
         </div>
@@ -620,8 +636,8 @@ export default function Home() {
 
         <div style={{
           borderRadius: 16, padding: '22px 18px', marginBottom: 20,
-          background: 'linear-gradient(135deg,rgba(29,185,84,0.12),rgba(29,185,84,0.04))',
-          border: '1.5px solid rgba(29,185,84,0.3)', textAlign: 'center',
+          background: 'linear-gradient(135deg,rgba(29,185,84,0.1),rgba(29,185,84,0.03))',
+          border: '1.5px solid rgba(29,185,84,0.28)', textAlign: 'center',
         }}>
           <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.72rem', marginBottom: 6 }}>Preço de hoje — compre pelo site</p>
           <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(3rem,12vw,4rem)', color: 'white', lineHeight: 1, letterSpacing: '0.02em' }}>R$89,90</p>
