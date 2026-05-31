@@ -1,13 +1,4 @@
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #07182a;
-  color: #fff;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-@keyframes blink {
-  0%,100% { opacity:1; }
-  50%      { opacity:0.5; }
-}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#07182a;color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
