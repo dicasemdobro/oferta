@@ -147,11 +147,11 @@ function useScrollTracking() {
 }
 
 const PARTNERS = [
-  { img: '/images/rest-borelli.webp', logo: '/images/rest-borelli-logo.webp', name: 'Gelato Borelli', cat: 'Gelato & Sobremesas', benefit: 'Na compra de um Milkshake G, ganhe outro de igual ou menor valor.' },
   { img: '/images/rest-cocobambu.webp', logo: '/images/rest-cocobambu-logo.webp', name: 'Coco Bambu', cat: 'Frutos do Mar', benefit: 'Na compra de uma isca de peixe ou camarão à milanesa, ganhe outra de menor ou igual valor.' },
   { img: '/images/rest-nugrill.webp', logo: '/images/rest-nugrill-logo.webp', name: 'Nugrill Burger', cat: 'Hambúrguer artesanal', benefit: 'Na compra de um Nuhavaí, ganhe outro de igual ou menor valor.' },
   { img: '/images/rest-harushi.webp', logo: '/images/rest-harushi-logo.webp', name: 'Harushi Oriental', cat: 'Japonesa premium', benefit: 'Na compra de um combo (15 peças), ganhe outro de igual ou menor valor.' },
   { img: '/images/rest-jazz.webp', logo: '/images/rest-jazz-logo.webp', name: 'Jazz Cozinha', cat: 'Contemporânea', benefit: 'Compre um prato principal e ganhe outro de igual ou menor valor.' },
+  { img: '/images/rest-borelli.webp', logo: '/images/rest-borelli-logo.webp', name: 'Gelato Borelli', cat: 'Gelato & Sobremesas', benefit: 'Na compra de um Milkshake G, ganhe outro de igual ou menor valor.' },
 ]
 
 const FAQS = [
@@ -172,90 +172,6 @@ const ECONOMY = [
   { label: 'Gelato Borelli', economia: 40 },
 ]
 
-
-/* ── VIMEO LAZY LOAD 9:16 ── */
-function LazyVimeo() {
-  const ref = useRef(null)
-  const [load, setLoad] = useState(false)
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setLoad(true); obs.disconnect() }
-    }, { threshold: 0.1, rootMargin: '150px' })
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
-  }, [])
-  return (
-    <div ref={ref} style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.5)', marginBottom: 24, background: '#061220', position: 'relative', maxWidth: '100%' }}>
-      <div style={{ paddingBottom: '177.78%', position: 'relative' }}>
-        {load ? (
-          <iframe
-            src="https://player.vimeo.com/video/1197527843?badge=0&autopause=0&player_id=0&app_id=58479"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-            title="Dicas em Dobro — Como usar"
-          />
-        ) : (
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 10 }}>
-            <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', border: '2px solid rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontSize: '1.4rem', marginLeft: 4 }}>▶</span>
-            </div>
-            <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.68rem' }}>Toque para carregar o vídeo</p>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
-
-/* ── BOTÕES FLUTUANTES WhatsApp + Instagram ── */
-function FloatingButtons() {
-  return (
-    <div style={{
-      position: 'fixed', bottom: 24, right: 16, zIndex: 1000,
-      display: 'flex', flexDirection: 'column', gap: 10,
-    }}>
-      {/* WhatsApp */}
-      <a
-        href="https://wa.me/5517991168922"
-        target="_blank"
-        rel="noopener noreferrer"
-        title="Fale no WhatsApp"
-        style={{
-          width: 50, height: 50, borderRadius: '50%',
-          background: '#25D366',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 4px 16px rgba(37,211,102,0.5)',
-          textDecoration: 'none', fontSize: '1.4rem',
-        }}
-      >
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.847L.057 23.882l6.204-1.629A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.651-.51-5.168-1.4l-.371-.22-3.844 1.009 1.03-3.751-.242-.386A9.934 9.934 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-        </svg>
-      </a>
-      {/* Instagram */}
-      <a
-        href="https://www.instagram.com/dicasemdobro.rp1"
-        target="_blank"
-        rel="noopener noreferrer"
-        title="Instagram"
-        style={{
-          width: 50, height: 50, borderRadius: '50%',
-          background: 'linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 4px 16px rgba(220,39,67,0.45)',
-          textDecoration: 'none',
-        }}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-        </svg>
-      </a>
-    </div>
-  )
-}
-
 export default function Home() {
   useScrollTracking()
   return (
@@ -270,7 +186,7 @@ export default function Home() {
           COMPRE 1 PRATO<br /><span style={{ color: '#FFD700' }}>GANHE OUTRO</span><br />DE GRAÇA
         </h1>
         <div style={{ marginBottom: 14 }}>
-          <CTAButton label="hero-top" text="GARANTIR POR R$89,90 AGORA" sub="De R$129,90 · Só hoje · Pagamento via Pix" />
+          <CTAButton label="hero-top" text="GARANTIR POR R$89,90 AGORA" sub="Amanhã o preço sobe · Pagamento via Pix · Sem mensalidade" />
         </div>
         <div style={{ borderRadius: 16, overflow: 'hidden', position: 'relative', marginBottom: 14, boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}>
           <img src="/images/hero.webp" alt="Dicas em Dobro" style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 275 }} loading="eager" />
@@ -284,7 +200,7 @@ export default function Home() {
         <div style={{ marginBottom: 14 }}><Countdown /></div>
         <PriceStrip />
         <div style={{ marginTop: 14 }}>
-          <CTAButton label="hero" text="GARANTIR POR R$89,90 AGORA" sub="De R$129,90 · Só hoje · Pagamento via Pix" />
+          <CTAButton label="hero" text="GARANTIR POR R$89,90 AGORA" sub="Amanhã o preço sobe · Pagamento via Pix · Sem mensalidade" />
         </div>
       </section>
 
@@ -299,7 +215,11 @@ export default function Home() {
           <span style={{ fontSize: '1.1rem' }}>🏆</span>
           <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '0.95rem', color: '#FFD700', letterSpacing: '0.04em', lineHeight: 1 }}>CONCORRA A UM iPHONE 17e</p>
         </div>
-        <LazyVimeo />
+        <div style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.5)', marginBottom: 24 }}>
+          <div style={{ padding: '56.25% 0 0', position: 'relative' }}>
+            <iframe src="https://player.vimeo.com/video/1196995723?badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} title="Como comprar — Dicas em Dobro" />
+          </div>
+        </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
           {[
             { n: '1', t: 'Acesse o site', d: 'Toque aqui para abrir o site do app.', link: true },
@@ -328,8 +248,10 @@ export default function Home() {
         <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8, textAlign: 'center' }}>A MATEMÁTICA QUE FECHA A CONTA</p>
         <h2 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.8rem,7vw,2.8rem)', letterSpacing: '0.02em', lineHeight: 1.05, textAlign: 'center', marginBottom: 6 }}>USE UMA VEZ.<br /><span style={{ color: '#FFD700' }}>JÁ PAGOU.</span></h2>
         <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.35)', fontSize: '0.8rem', lineHeight: 1.5, marginBottom: 28 }}>Economia estimada por restaurante, em média por casal.</p>
-        <div style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', marginBottom: 4 }}>
-          <img src="/images/economia-parceiros.webp" alt="Quanto você economiza por restaurante" style={{ width: '100%', display: 'block' }} loading="lazy" />
+        {ECONOMY.map((e, i) => <EconomyBar key={i} label={e.label} economia={e.economia} max={130} />)}
+        <div style={{ marginTop: 22, borderRadius: 12, padding: '18px 16px', background: 'linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.04))', border: '1px solid rgba(255,215,0,0.25)', textAlign: 'center' }}>
+          <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.6rem,6vw,2rem)', color: '#FFD700', letterSpacing: '0.03em', lineHeight: 1.1 }}>MAIS DE R$3.000<br /><span style={{ fontSize: '0.75em', color: 'rgba(255,255,255,0.5)' }}>EM BENEFÍCIOS DURANTE A CAMPANHA</span></p>
+          <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.72rem', marginTop: 8 }}>Você paga R$89,90 uma vez. O resto é puro lucro.</p>
         </div>
         <div style={{ marginTop: 20 }}><CTAButton label="economia" text="GARANTIR MEU PASSE AGORA" sub="Válido até 10/04/2027 · Pagamento único" /></div>
       </section>
@@ -406,7 +328,7 @@ export default function Home() {
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(227,62,51,0.15)', border: '1px solid rgba(227,62,51,0.4)', borderRadius: 100, padding: '5px 14px', marginBottom: 18, color: '#ff7a72', fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', animation: 'blink 2s ease infinite' }}>⏰ ÚLTIMA CHANCE</span>
           <h2 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(2.2rem,9vw,3.4rem)', letterSpacing: '0.02em', lineHeight: 0.95, marginBottom: 14 }}>AMANHÃ<br />O PREÇO <span style={{ color: '#E33E33' }}>SOBE.</span></h2>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', lineHeight: 1.6, marginBottom: 24 }}>Hoje é R$89,90. Amanhã o valor sobe.<br />Quem entrou primeiro, pagou menos.</p>
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', lineHeight: 1.6, marginBottom: 24 }}>Hoje é R$89,90. Após 03/06 às 10h o valor sobe.<br />Quem entrou primeiro, pagou menos.</p>
         </div>
         <div style={{ marginBottom: 24 }}><Countdown /></div>
         <div style={{ borderRadius: 16, overflow: 'hidden', marginBottom: 20, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
@@ -422,7 +344,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <CTAButton label="final" text="QUERO MEU PASSE POR R$89,90" sub="De R$129,90 · Acesso imediato · Pague via Pix" />
+        <CTAButton label="final" text="QUERO MEU PASSE POR R$89,90" sub="Clique · Cadastre · Pague via Pix · Acesse na hora" />
         <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.18)', fontSize: '0.62rem', marginTop: 10 }}>Pagamento 100% seguro · Acesso imediato · iPhone e Android</p>
       </section>
 
@@ -435,7 +357,6 @@ export default function Home() {
         <p style={{ color: 'rgba(255,255,255,0.08)', fontSize: '0.58rem', marginTop: 4 }}>Sorteio sujeito a regulamento. Imagens meramente ilustrativas.</p>
       </footer>
 
-      <FloatingButtons />
     </main>
   )
 }
