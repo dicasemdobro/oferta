@@ -191,13 +191,7 @@ export default function Home() {
         <div style={{ borderRadius: 16, overflow: 'hidden', position: 'relative', marginBottom: 14, boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}>
           <img src="/images/hero.webp" alt="Dicas em Dobro" style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 275 }} loading="eager" />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,24,42,0.65) 0%, rgba(7,24,42,0.1) 60%, transparent 100%)' }} />
-          <div style={{ position: 'absolute', top: 10, left: 12, right: 12, display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(12px)', borderRadius: 12, padding: '9px 14px', border: '1px solid rgba(255,215,0,0.3)' }}>
-            <span style={{ fontSize: '1.1rem' }}>🏆</span>
-            <div>
-              <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '0.95rem', color: '#FFD700', letterSpacing: '0.04em', lineHeight: 1 }}>CONCORRA A UM iPHONE 17e</p>
-              <p style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Exclusivo para quem comprar hoje</p>
-            </div>
-          </div>
+
 
         </div>
         <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 16, boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
@@ -216,6 +210,10 @@ export default function Home() {
           <p style={{ color: '#FFD700', fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8 }}>⚠️ ATENÇÃO</p>
           <h2 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.8rem,7vw,2.8rem)', letterSpacing: '0.02em', lineHeight: 1.05, marginBottom: 8 }}>COMPRE PELO SITE,<br /><span style={{ color: '#FFD700' }}>NÃO PELO APP</span></h2>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.82rem', lineHeight: 1.55 }}>Pelo site você paga <strong style={{ color: 'white' }}>R$89,90</strong>. Pelo app você pagaria R$129,90.<br />Assista e veja como é simples:</p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,215,0,0.3)', borderRadius: 12, padding: '10px 14px', marginBottom: 16 }}>
+          <span style={{ fontSize: '1.1rem' }}>🏆</span>
+          <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '0.95rem', color: '#FFD700', letterSpacing: '0.04em', lineHeight: 1 }}>CONCORRA A UM iPHONE 17e</p>
         </div>
         <div style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.5)', marginBottom: 24 }}>
           <div style={{ padding: '56.25% 0 0', position: 'relative' }}>
@@ -273,14 +271,9 @@ export default function Home() {
                 <div style={{ position: 'absolute', top: 10, right: 10, background: 'rgba(29,185,84,0.9)', borderRadius: 100, padding: '2px 8px', fontSize: '0.56rem', fontWeight: 800, color: 'white' }}>PARCEIRO</div>
               </div>
               <div style={{ padding: '12px 14px 14px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, overflow: 'hidden', flexShrink: 0, border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <img src={r.logo} alt={r.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                  <div>
-                    <p style={{ fontWeight: 800, fontSize: '0.9rem', color: 'white', lineHeight: 1.2 }}>{r.name}</p>
-                    <p style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)' }}>{r.cat}</p>
-                  </div>
+                <div style={{ marginBottom: 8 }}>
+                  <p style={{ fontWeight: 800, fontSize: '0.9rem', color: 'white', lineHeight: 1.2 }}>{r.name}</p>
+                  <p style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)' }}>{r.cat}</p>
                 </div>
                 <div style={{ background: 'rgba(255,215,0,0.1)', border: '1px solid rgba(255,215,0,0.3)', borderRadius: 8, padding: '8px 10px' }}>
                   <p style={{ fontSize: '0.67rem', color: '#FFD700', lineHeight: 1.45, fontWeight: 600 }}>🎁 {r.benefit}</p>
