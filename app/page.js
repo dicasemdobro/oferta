@@ -147,11 +147,11 @@ function useScrollTracking() {
 }
 
 const PARTNERS = [
+  { img: '/images/rest-borelli.webp', logo: '/images/rest-borelli-logo.webp', name: 'Gelato Borelli', cat: 'Gelato & Sobremesas', benefit: 'Na compra de um Milkshake G, ganhe outro de igual ou menor valor.' },
   { img: '/images/rest-cocobambu.webp', logo: '/images/rest-cocobambu-logo.webp', name: 'Coco Bambu', cat: 'Frutos do Mar', benefit: 'Na compra de uma isca de peixe ou camarão à milanesa, ganhe outra de menor ou igual valor.' },
   { img: '/images/rest-nugrill.webp', logo: '/images/rest-nugrill-logo.webp', name: 'Nugrill Burger', cat: 'Hambúrguer artesanal', benefit: 'Na compra de um Nuhavaí, ganhe outro de igual ou menor valor.' },
   { img: '/images/rest-harushi.webp', logo: '/images/rest-harushi-logo.webp', name: 'Harushi Oriental', cat: 'Japonesa premium', benefit: 'Na compra de um combo (15 peças), ganhe outro de igual ou menor valor.' },
   { img: '/images/rest-jazz.webp', logo: '/images/rest-jazz-logo.webp', name: 'Jazz Cozinha', cat: 'Contemporânea', benefit: 'Compre um prato principal e ganhe outro de igual ou menor valor.' },
-  { img: '/images/rest-borelli.webp', logo: '/images/rest-borelli-logo.webp', name: 'Gelato Borelli', cat: 'Gelato & Sobremesas', benefit: 'Na compra de um Milkshake G, ganhe outro de igual ou menor valor.' },
 ]
 
 const FAQS = [
@@ -248,10 +248,8 @@ export default function Home() {
         <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8, textAlign: 'center' }}>A MATEMÁTICA QUE FECHA A CONTA</p>
         <h2 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.8rem,7vw,2.8rem)', letterSpacing: '0.02em', lineHeight: 1.05, textAlign: 'center', marginBottom: 6 }}>USE UMA VEZ.<br /><span style={{ color: '#FFD700' }}>JÁ PAGOU.</span></h2>
         <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.35)', fontSize: '0.8rem', lineHeight: 1.5, marginBottom: 28 }}>Economia estimada por restaurante, em média por casal.</p>
-        {ECONOMY.map((e, i) => <EconomyBar key={i} label={e.label} economia={e.economia} max={130} />)}
-        <div style={{ marginTop: 22, borderRadius: 12, padding: '18px 16px', background: 'linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.04))', border: '1px solid rgba(255,215,0,0.25)', textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.6rem,6vw,2rem)', color: '#FFD700', letterSpacing: '0.03em', lineHeight: 1.1 }}>MAIS DE R$3.000<br /><span style={{ fontSize: '0.75em', color: 'rgba(255,255,255,0.5)' }}>EM BENEFÍCIOS DURANTE A CAMPANHA</span></p>
-          <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.72rem', marginTop: 8 }}>Você paga R$89,90 uma vez. O resto é puro lucro.</p>
+        <div style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)', marginBottom: 4 }}>
+          <img src="/images/economia-parceiros.webp" alt="Quanto você economiza por restaurante" style={{ width: '100%', display: 'block' }} loading="lazy" />
         </div>
         <div style={{ marginTop: 20 }}><CTAButton label="economia" text="GARANTIR MEU PASSE AGORA" sub="Válido até 10/04/2027 · Pagamento único" /></div>
       </section>
