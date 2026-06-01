@@ -44,7 +44,7 @@ function PriceStrip() {
 }
 
 function Countdown() {
-  const TARGET = new Date('2025-06-03T10:00:00-03:00').getTime()
+  const TARGET = new Date('2025-06-02T23:59:00-03:00').getTime()
   const [mounted, setMounted] = useState(false)
   const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 })
   useEffect(() => {
@@ -61,16 +61,16 @@ function Countdown() {
   const blocks = [{ v: String(t.d).padStart(2,'0'), l: 'dias' }, { v: String(t.h).padStart(2,'0'), l: 'horas' }, { v: String(t.m).padStart(2,'0'), l: 'min' }, { v: String(t.s).padStart(2,'0'), l: 'seg' }]
   return (
     <div style={{ textAlign: 'center' }}>
-      <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12 }}>⏳ preço de R$89,90 encerra em</p>
+      <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12 }}>⏳ OFERTA ENCERRA EM</p>
       <div style={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
         {blocks.map((b, i) => (
           <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 10, padding: '10px 14px', minWidth: 56, textAlign: 'center', fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.8rem,7vw,2.6rem)', color: '#FFD700', lineHeight: 1 }}>{b.v}</div>
+            <div style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 10, padding: '10px 14px', minWidth: 56, textAlign: 'center', fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.8rem,7vw,2.6rem)', color: '#E33E33', lineHeight: 1 }}>{b.v}</div>
             <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 4 }}>{b.l}</span>
           </div>
         ))}
       </div>
-      <p style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.6rem', marginTop: 10 }}>Oferta encerra em 03/06 às 10h da manhã</p>
+      <p style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.6rem', marginTop: 10 }}>Oferta encerra hoje às 23:59</p>
     </div>
   )
 }
@@ -161,8 +161,11 @@ export default function Home() {
         <h1 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(2.4rem,10vw,3.8rem)', lineHeight: 0.95, letterSpacing: '0.01em', color: 'white', textAlign: 'center', marginBottom: 14 }}>
           COMPRE 1<br /><span style={{ color: '#FFD700' }}>GANHE OUTRO</span><br />DE GRAÇA
         </h1>
+        <div style={{ marginBottom: 14 }}>
+          <CTAButton label="hero-top" text="GARANTIR POR R$89,90 AGORA" sub="Amanhã o preço sobe · Pagamento via Pix · Sem mensalidade" />
+        </div>
         <div style={{ borderRadius: 16, overflow: 'hidden', position: 'relative', marginBottom: 14, boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}>
-          <img src="/images/hero.webp" alt="Dicas em Dobro" style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 320 }} loading="eager" />
+          <img src="/images/hero.webp" alt="Dicas em Dobro" style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 275 }} loading="eager" />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,24,42,0.65) 0%, rgba(7,24,42,0.1) 60%, transparent 100%)' }} />
           <div style={{ position: 'absolute', top: 10, left: 12, display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)', borderRadius: 100, padding: '5px 10px 5px 5px', border: '1px solid rgba(255,255,255,0.1)' }}>
             <img src="/images/logo.webp" alt="Logo" style={{ width: 22, height: 22, borderRadius: '50%', background: 'white', padding: 2 }} />
@@ -179,6 +182,7 @@ export default function Home() {
         <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 16, boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
           <img src="/images/hero-banner.webp" alt="+60 restaurantes · +R$3.000 · Sorteio iPhone 17e" style={{ width: '100%', display: 'block' }} loading="eager" />
         </div>
+        <div style={{ marginBottom: 14 }}><Countdown /></div>
         <PriceStrip />
         <div style={{ marginTop: 14 }}>
           <CTAButton label="hero" text="GARANTIR POR R$89,90 AGORA" sub="Amanhã o preço sobe · Pagamento via Pix · Sem mensalidade" />
@@ -192,7 +196,6 @@ export default function Home() {
           <h2 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.8rem,7vw,2.8rem)', letterSpacing: '0.02em', lineHeight: 1.05, marginBottom: 8 }}>COMPRE PELO SITE,<br /><span style={{ color: '#FFD700' }}>NÃO PELO APP</span></h2>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.82rem', lineHeight: 1.55 }}>Pelo site você paga <strong style={{ color: 'white' }}>R$89,90</strong>. Pelo app você pagaria R$129,90.<br />Assista e veja como é simples:</p>
         </div>
-        <div style={{ marginBottom: 28 }}><Countdown /></div>
         <div style={{ borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.5)', marginBottom: 24 }}>
           <div style={{ padding: '56.25% 0 0', position: 'relative' }}>
             <iframe src="https://player.vimeo.com/video/1196995723?badge=0&autopause=0&player_id=0&app_id=58479" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} title="Como comprar — Dicas em Dobro" />
@@ -273,7 +276,7 @@ export default function Home() {
         <div style={{ padding: '0 20px' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
             {['Outback','Coco Bambu','Bonsai','Fifty2','El Santo','Raizal','Brasaria','Yakiniku','Belzebeer','Tom Nosso','Prozaria','Lugano','Universo Ozzy','Makisu Prime','Jazz','Harushi','+ outros'].map((n, i) => (
-              <span key={i} style={{ background: i===16 ? 'rgba(29,185,84,0.12)' : 'rgba(255,255,255,0.05)', border: `1px solid ${i===16 ? 'rgba(29,185,84,0.3)' : 'rgba(255,255,255,0.08)'}`, borderRadius: 100, padding: '4px 10px', fontSize: '0.72rem', fontWeight: 600, color: i===16 ? '#1DB954' : 'rgba(255,255,255,0.55)' }}>{n}</span>
+              <span key={i} style={{ background: i===16 ? 'rgba(29,185,84,0.12)' : 'rgba(255,255,255,0.05)', border: `1px solid ${i===16 ? 'rgba(29,185,84,0.3)' : 'rgba(255,255,255,0.08)'}`, borderRadius: 6, padding: '4px 10px', fontSize: '0.72rem', fontWeight: 600, color: i===16 ? '#1DB954' : 'rgba(255,255,255,0.55)' }}>{n}</span>
             ))}
           </div>
           <CTAButton label="parceiros" text="VER TODOS NO APP" sub="Acesso imediato após a compra" />
@@ -303,7 +306,7 @@ export default function Home() {
         <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8, textAlign: 'center' }}>TUDO QUE VOCÊ PRECISA SABER</p>
         <h2 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.8rem,7vw,2.4rem)', letterSpacing: '0.02em', lineHeight: 1.05, textAlign: 'center', marginBottom: 24 }}>PRINCIPAIS<br /><span style={{ color: '#FFD700' }}>DÚVIDAS</span></h2>
         {FAQS.map((f, i) => <FaqItem key={i} q={f.q} a={f.a} />)}
-        <div style={{ marginTop: 28 }}><CTAButton label="faq" text="AINDA TEM DÚVIDA? COMPRE ASSIM MESMO" sub="Acesso imediato · Suporte disponível" /></div>
+        <div style={{ marginTop: 28 }}><CTAButton label="faq" text="⏰ ÚLTIMAS HORAS PELO MELHOR VALOR DO ANO" sub="Acesso imediato · Pagamento via Pix" /></div>
       </section>
 
       {/* LÂMINA 7 — CTA FINAL */}
