@@ -44,33 +44,56 @@ function PriceStrip() {
 }
 
 function Countdown() {
-  const TARGET = new Date('2025-06-02T23:59:00-03:00').getTime()
   const [mounted, setMounted] = useState(false)
-  const [t, setT] = useState({ d: 0, h: 0, m: 0, s: 0 })
+  const [t, setT] = useState({ h: 0, m: 0, s: 0 })
+
   useEffect(() => {
+    setMounted(true)
     function calc() {
-      const diff = Math.max(0, TARGET - Date.now())
-      setT({ d: Math.floor(diff/86400000), h: Math.floor((diff%86400000)/3600000), m: Math.floor((diff%3600000)/60000), s: Math.floor((diff%60000)/1000) })
+      // Calcula dinamicamente: hoje às 23:59:59 no horário do usuário
+      const now = new Date()
+      const end = new Date(now)
+      end.setHours(23, 59, 59, 0)
+      const diff = Math.max(0, end.getTime() - now.getTime())
+      setT({
+        h: Math.floor(diff / 3600000),
+        m: Math.floor((diff % 3600000) / 60000),
+        s: Math.floor((diff % 60000) / 1000),
+      })
     }
     calc()
-    setMounted(true)
     const id = setInterval(calc, 1000)
     return () => clearInterval(id)
   }, [])
-  if (!mounted) return <div style={{ textAlign: 'center', padding: '20px 0', color: 'rgba(255,255,255,0.2)', fontSize: '0.72rem' }}>Carregando contador...</div>
-  const blocks = [{ v: String(t.d).padStart(2,'0'), l: 'dias' }, { v: String(t.h).padStart(2,'0'), l: 'horas' }, { v: String(t.m).padStart(2,'0'), l: 'min' }, { v: String(t.s).padStart(2,'0'), l: 'seg' }]
+
+  if (!mounted) return null
+
+  const blocks = [
+    { v: String(t.h).padStart(2,'0'), l: 'horas' },
+    { v: String(t.m).padStart(2,'0'), l: 'min' },
+    { v: String(t.s).padStart(2,'0'), l: 'seg' },
+  ]
+
   return (
-    <div style={{ textAlign: 'center' }}>
-      <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12 }}>⏳ OFERTA ENCERRA EM</p>
+    <div style={{ textAlign: 'center', padding: '4px 0' }}>
+      <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.66rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 10 }}>⏳ OFERTA ENCERRA EM</p>
       <div style={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
         {blocks.map((b, i) => (
           <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 10, padding: '10px 14px', minWidth: 56, textAlign: 'center', fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(1.8rem,7vw,2.6rem)', color: '#E33E33', lineHeight: 1 }}>{b.v}</div>
-            <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 4 }}>{b.l}</span>
+            <div style={{
+              background: 'rgba(227,62,51,0.15)',
+              border: '1.5px solid rgba(227,62,51,0.5)',
+              borderRadius: 10, padding: '10px 16px',
+              minWidth: 60, textAlign: 'center',
+              fontFamily: "'Bebas Neue',sans-serif",
+              fontSize: 'clamp(1.9rem,7vw,2.8rem)',
+              color: '#E33E33', lineHeight: 1,
+            }}>{b.v}</div>
+            <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 5 }}>{b.l}</span>
           </div>
         ))}
       </div>
-      <p style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.6rem', marginTop: 10 }}>Oferta encerra hoje às 23:59</p>
+      <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.6rem', marginTop: 10 }}>Oferta encerra hoje às 23:59</p>
     </div>
   )
 }
@@ -159,25 +182,16 @@ export default function Home() {
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(227,62,51,0.15)', border: '1px solid rgba(227,62,51,0.45)', borderRadius: 100, padding: '5px 14px', color: '#ff7a72', fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', animation: 'blink 2s ease infinite' }}>🔥 HOJE É O ÚLTIMO DIA PELO MENOR PREÇO</span>
         </div>
         <h1 style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: 'clamp(2.4rem,10vw,3.8rem)', lineHeight: 0.95, letterSpacing: '0.01em', color: 'white', textAlign: 'center', marginBottom: 14 }}>
-          COMPRE 1<br /><span style={{ color: '#FFD700' }}>GANHE OUTRO</span><br />DE GRAÇA
+          COMPRE 1 PRATO<br /><span style={{ color: '#FFD700' }}>GANHE OUTRO</span><br />DE GRAÇA
         </h1>
-        <div style={{ marginBottom: 14 }}>
-          <CTAButton label="hero-top" text="GARANTIR POR R$89,90 AGORA" sub="Amanhã o preço sobe · Pagamento via Pix · Sem mensalidade" />
-        </div>
-        <div style={{ borderRadius: 16, overflow: 'hidden', position: 'relative', marginBottom: 14, boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}>
+<div style={{ borderRadius: 16, overflow: 'hidden', position: 'relative', marginBottom: 14, boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}>
           <img src="/images/hero.webp" alt="Dicas em Dobro" style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 275 }} loading="eager" />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,24,42,0.65) 0%, rgba(7,24,42,0.1) 60%, transparent 100%)' }} />
           <div style={{ position: 'absolute', top: 10, left: 12, display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(8px)', borderRadius: 100, padding: '5px 10px 5px 5px', border: '1px solid rgba(255,255,255,0.1)' }}>
             <img src="/images/logo.webp" alt="Logo" style={{ width: 22, height: 22, borderRadius: '50%', background: 'white', padding: 2 }} />
             <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.06em' }}>DICAS EM DOBRO · RIO PRETO</span>
           </div>
-          <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12, display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(12px)', borderRadius: 12, padding: '9px 14px', border: '1px solid rgba(255,215,0,0.3)' }}>
-            <span style={{ fontSize: '1.1rem' }}>🏆</span>
-            <div>
-              <p style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '0.95rem', color: '#FFD700', letterSpacing: '0.04em', lineHeight: 1 }}>CONCORRA A UM iPHONE 17e</p>
-              <p style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>Exclusivo para quem comprar hoje</p>
-            </div>
-          </div>
+
         </div>
         <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 16, boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
           <img src="/images/hero-banner.webp" alt="+60 restaurantes · +R$3.000 · Sorteio iPhone 17e" style={{ width: '100%', display: 'block' }} loading="eager" />
