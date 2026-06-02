@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 
 const FINAL_URL = 'https://app.dicasemdobro.com.br'
-const PIXEL_ID = 'SEU_PIXEL_ID_AQUI'
+const PIXEL_ID = '1127780420422737'
 
 export default function Ir() {
   useEffect(() => {

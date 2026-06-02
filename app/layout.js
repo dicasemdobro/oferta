@@ -32,13 +32,13 @@ export default function RootLayout({ children }) {
           n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
           t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
           (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init','SEU_PIXEL_ID_AQUI');
+          fbq('init','1127780420422737');
           fbq('track','PageView');
           fbq('track','ViewContent',{content_name:'LP Lancamento Dicas em Dobro'});
         `}} />
         <noscript>
           <img height="1" width="1" style={{display:'none'}}
-            src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1" />
+            src="https://www.facebook.com/tr?id=1127780420422737&ev=PageView&noscript=1" />
         </noscript>
       </head>
       <body>{children}</body>
