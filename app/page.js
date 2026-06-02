@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
-const APP_URL = 'https://app.dicasemdobro.com.br'
+const APP_URL = '/ir'
 
 function fbq(event, params) {
   if (typeof window !== 'undefined' && window.fbq) window.fbq('track', event, params || {})
@@ -50,10 +50,9 @@ function Countdown() {
   useEffect(() => {
     setMounted(true)
     function calc() {
-      // Calcula dinamicamente: amanhã às 23:59:59 no horário do usuário
+      // Hoje às 23:59:59 no horário do usuário
       const now = new Date()
       const end = new Date(now)
-      end.setDate(end.getDate() + 1)
       end.setHours(23, 59, 59, 0)
       const diff = Math.max(0, end.getTime() - now.getTime())
       setT({
@@ -94,7 +93,6 @@ function Countdown() {
           </div>
         ))}
       </div>
-      <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.6rem', marginTop: 10 }}>Oferta encerra amanhã às 23:59</p>
     </div>
   )
 }
