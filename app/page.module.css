@@ -1,0 +1,161 @@
+.card {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  padding: 32px 24px 40px;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, rgba(29, 185, 84, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo */
+.logo {
+  width: 72px !important;
+  height: 72px !important;
+  border-radius: 50%;
+  background: white;
+  padding: 5px;
+  margin: 0 auto 16px;
+  display: block;
+  box-shadow: 0 4px 20px rgba(29, 185, 84, 0.35);
+  object-fit: contain;
+}
+
+/* Badge disponível */
+.avail {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(29, 185, 84, 0.15);
+  border: 1px solid rgba(29, 185, 84, 0.4);
+  border-radius: 100px;
+  padding: 6px 16px;
+  color: #1DB954;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1DB954;
+  flex-shrink: 0;
+  animation: pdot 1.5s ease infinite;
+}
+
+@keyframes pdot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.4; }
+}
+
+/* Social proof */
+.proof {
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.proof strong {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Banner */
+.banner {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 16px;
+  display: block;
+  margin-bottom: 22px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Buttons */
+.btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 17px 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  background: #000;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.15s;
+  animation: pgrn 2.5s ease infinite;
+}
+
+.btn:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+@keyframes pgrn {
+  0%, 100% { box-shadow: 0 4px 20px rgba(29, 185, 84, 0.18); }
+  50% { box-shadow: 0 4px 32px rgba(29, 185, 84, 0.5); }
+}
+
+.bicon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.btxt {
+  text-align: left;
+}
+
+.bsm {
+  display: block;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.bbg {
+  display: block;
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.note {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 0.62rem;
+}

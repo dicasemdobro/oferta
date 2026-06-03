@@ -1,6 +1,6 @@
 {
-  "name": "dicas-em-dobro-v2",
-  "version": "0.2.0",
+  "name": "dicas-em-dobro",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
